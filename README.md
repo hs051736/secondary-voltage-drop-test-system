@@ -49,12 +49,44 @@ mysql -u root -p testdata < sql/init_database.sql
 
 ### 修改配置
 
-编辑 `src/main/resources/application.properties`，修改数据库连接信息：
+**方式一：设置环境变量（推荐）**
+
+应用所需的敏感配置全部通过环境变量注入，不硬编码在文件中：
+
+| 环境变量 | 说明 | 示例 |
+|----------|------|------|
+| `DB_USERNAME` | 数据库用户名（默认 `root`）| `root` |
+| `DB_PASSWORD` | 数据库密码 | `your_password` |
+| `BAIDU_OCR_API_KEY` | 百度 OCR API Key | `xhOLopUe...` |
+| `BAIDU_OCR_SECRET_KEY` | 百度 OCR Secret Key | `18CGFlE9...` |
+| `JWT_SECRET` | JWT 签名密钥（默认内置值，生产环境必须修改）| 随机长字符串 |
+
+Windows PowerShell 示例：
+
+```powershell
+$env:DB_PASSWORD="your_password"
+$env:BAIDU_OCR_API_KEY="your_api_key"
+$env:BAIDU_OCR_SECRET_KEY="your_secret_key"
+mvn spring-boot:run
+```
+
+Linux / macOS 示例：
+
+```bash
+export DB_PASSWORD="your_password"
+export BAIDU_OCR_API_KEY="your_api_key"
+export BAIDU_OCR_SECRET_KEY="your_secret_key"
+mvn spring-boot:run
+```
+
+**方式二：创建本地配置文件**
+
+在 `src/main/resources/` 下创建 `application-local.properties`，写入实际值（该文件已被 `.gitignore` 排除）：
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/testdata
-spring.datasource.username=root
-spring.datasource.password=你的密码
+spring.datasource.password=your_password
+baidu.ocr.api-key=your_api_key
+baidu.ocr.secret-key=your_secret_key
 ```
 
 ### 启动应用

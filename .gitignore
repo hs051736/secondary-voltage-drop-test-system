@@ -21,5 +21,5 @@ logs/
 # ===== Sensitive Config =====
 .env
 .env.local
-application-local.properties
-application-dev.properties
+**/application-local.properties
+**/application-dev.properties

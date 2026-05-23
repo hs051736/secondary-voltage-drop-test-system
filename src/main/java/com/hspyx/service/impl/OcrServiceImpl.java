@@ -5,6 +5,7 @@ import com.hspyx.service.OcrService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +26,13 @@ public class OcrServiceImpl implements OcrService {
     private static final DateTimeFormatter INPUT_DATE_FMT = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final DateTimeFormatter OUTPUT_DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    // 百度OCR API的配置
-    private static final String API_KEY = "xhOLopUe7gj84Jyu5rUdFoHz";
-    private static final String SECRET_KEY = "18CGFlE9kU0NJqatOcS1PdnXp8S5EhCg";
+    // 百度OCR API的配置（从配置文件读取，支持环境变量覆盖）
+    @Value("${baidu.ocr.api-key}")
+    private String apiKey;
+
+    @Value("${baidu.ocr.secret-key}")
+    private String secretKey;
+
     private static final String OCR_URL = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
 
     private String accessToken = null;
@@ -265,8 +270,8 @@ public class OcrServiceImpl implements OcrService {
 
         // 构建获取AccessToken的URL
         String authUrl = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials" +
-                "&client_id=" + API_KEY +
-                "&client_secret=" + SECRET_KEY;
+                "&client_id=" + apiKey +
+                "&client_secret=" + secretKey;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
