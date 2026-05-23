@@ -25,4 +25,4 @@ logs/
 **/application-dev.properties
 
 docs/
-CLAUDE-*.md
+CLAUDE.md
