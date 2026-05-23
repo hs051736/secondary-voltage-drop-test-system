@@ -23,3 +23,6 @@ logs/
 .env.local
 **/application-local.properties
 **/application-dev.properties
+
+docs/
+CLAUDE-*.md
