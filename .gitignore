@@ -1,0 +1,25 @@
+# ===== Maven Build Output =====
+target/
+
+# ===== IDE =====
+.idea/
+*.iml
+.trae/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== Sensitive Config =====
+.env
+.env.local
+application-local.properties
+application-dev.properties
